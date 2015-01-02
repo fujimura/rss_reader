@@ -11,6 +11,19 @@ feature 'Feed 一覧を表示する' do
   end
 end
 
+feature 'Feed 一覧を表示する', 'ItemのないFeedが存在する時' do
+  let!(:feed) { FactoryGirl.create :feed, author: 'alice' }
+
+  before do
+    Item.delete_all
+  end
+
+  scenario 'エラーが起きない' do
+    visit root_path
+    expect(page).to have_content 'read items'
+  end
+end
+
 feature 'Feed 詳細画面を表示する' do
   let!(:feed) { FactoryGirl.create :feed, author: 'alice' }
 
