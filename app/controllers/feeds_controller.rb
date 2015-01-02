@@ -2,7 +2,7 @@ class FeedsController < ApplicationController
   before_filter :accessible_check, :except => [:index, :show]
 
   def index
-    @feeds = Feed.all.order('author')
+    @feeds = Feed.all.includes(:items).order('author')
     @items = Item.includes(:feed).order('posted_at desc').page(params[:page])
   end
 
